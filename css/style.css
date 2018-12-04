@@ -11,14 +11,15 @@
 
 #gameboard {
   display: grid;
-  grid-template-columns: auto auto auto auto auto;
-
+  grid-template-columns: 225px 225px 225px 225px 225px;
+  grid-template-rows: 225px 225px 225px 225px 225px;
   grid-gap: 20px;
-  height: 800px;
+  /* height: 800px; */
 }
 
 #sidebar {
-  display: inline-block;
+  display: grid;
+  grid-template-columns: 200px;
 }
 
 #gameboard > .grid-item {
@@ -31,6 +32,23 @@
   padding-right: 10px;
 }
 
+#monster-sprites {
+
+}
+
+#sprites-container {
+  display: grid;
+  grid-template-columns: auto auto auto auto auto;
+}
+
+.image {
+  max-width: 100%;
+}
+
+.grid-item {
+
+}
+
 /* Dice Roll Css */
 .block {
   display: flex;
@@ -41,10 +59,10 @@
   font-size: 20px;
 }
 .box {
-  width: 500px;
+  width: auto;
   border: 1px solid black;
   text-align: center;
-  height: 300px;
+  height: 150px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
