@@ -5,7 +5,8 @@ document.addEventListener('DOMContentLoaded', function() {
 })
 
 let turn = true
-let char;
+let char
+let monster1, monster2, monster3, monster4, monster5
 
 function getChar() {
   fetch('http://localhost:3000/characters/1')
@@ -45,7 +46,6 @@ function setMonster (monsters) {
 
   let fifthMonster = document.getElementById('board-22')
   fifthMonster.append(insert(selectedMonsters[4], "monster"))
-
 }
 
 function checkTiles () {
@@ -87,7 +87,7 @@ function insert (char, id) {
 }
 
 function removeChar (element) {
-  document.querySelector("#player").remove()
+  element.children.namedItem('player').remove()
 }
 
 function monsterPicker (monsterArr) {
