@@ -18,7 +18,7 @@ function debuffsCreator () {
   let clippers = document.createElement('div')
   clippers.id = 'clippers'
   clippers.className = 'effect'
-  clippers.innerText = "You're a Clippers fan. Lose a turn!"
+  clippers.innerText = "You're a Clippers fan. Move one space next turn."
 
   let leftPhone = document.createElement('div')
   leftPhone.id = 'leftphone'
@@ -28,12 +28,12 @@ function debuffsCreator () {
   let moveBack = document.createElement('div')
   moveBack.id = 'moveback'
   moveBack.className = 'effect'
-  moveBack.innerText = "You're a fan of Jared Leto's joker. Move back 3 spaces."
+  moveBack.innerText = "You're a fan of Jared Leto's joker. Move back 3 spaces on next turn."
 
   // let index = Math.floor(Math.random() * monsterArr.length)
   function debuffCreator(debuff, length) {
     while (document.querySelectorAll('.effect').length < length) {
-      let boardNum = Math.floor(Math.random() * 23)
+      let boardNum = Math.ceil(Math.random() * 22)
       // debugger
       if (document.getElementById(`board-${boardNum}`).querySelector('.effect')) {
       } else {
@@ -44,8 +44,8 @@ function debuffsCreator () {
   }
   debuffCreator(dysentary, 2)
   debuffCreator(clippers, 4)
-  debuffCreator(leftPhone, 6)
-  debuffCreator(moveBack, 8)
+  debuffCreator(moveBack, 6)
+  debuffCreator(leftPhone, 8)
 }
 
 function getChar() {
@@ -92,6 +92,7 @@ function setMonster (monsters) {
 function moveMonsters() {
 
   function rollAndMove(monster) {
+    // debugger
     if (monster.children.namedItem("monster")) {
       // debugger
       let newishTile
@@ -122,10 +123,9 @@ function moveMonsters() {
         })
         if (captiveMonster) {
           captiveMonster.innerHTML = ''
-          // debugger
           monster.children.namedItem("monster").remove()
         } else {
-          alert('Game over!')
+          alert(`Game over! ${monster.children.namedItem("monster").dataset.tagline}`)
         }
       } else {
         newishTile.append(monster.children.namedItem('monster'))
@@ -140,7 +140,6 @@ function moveMonsters() {
   setTimeout(() => {monster4 = rollAndMove(monster4)}, 1500)
   setTimeout(() => {
     monster5 = rollAndMove(monster5)
-    // debugger
     document.getElementById('rollBtn').disabled = false
     document.getElementById('turn-character').style.background = 'green'
     document.getElementById('turn-monster').style.background = 'white'
@@ -166,12 +165,27 @@ function rollDiceWithoutValues() {
 
 function moveChar (value) {
   let currentPosition = document.getElementById("player").parentElement
-  let newPosition = parseInt(currentPosition.id.split("-")[1]) + 2 // REMEMBER!!!!!!!!!!!!!!!!!!!!
+
+
+  if (currentPosition.querySelector('.effect')) {
+    switch (currentPosition.querySelector('.effect').id) {
+      case 'dysentary':
+        value = Math.floor(value / 2)
+        break
+      case 'clippers':
+        value = 1
+        break
+      case 'moveback':
+        value = -3
+        break
+    }
+  }
+
+  let newPosition = parseInt(currentPosition.id.split("-")[1]) + parseInt(value)
   if (newPosition > 24) {
     newPosition = 24
   }
   let newTile = document.getElementById(`board-${newPosition}`)
-
 
   if (newTile.children.namedItem('monster')) {
     let spritesContainer = document.getElementById('sprites-container')
@@ -183,6 +197,13 @@ function moveChar (value) {
       }
       i++
     }
+    // debugger
+    if (newTile.children.namedItem("leftphone")) {
+      newTile = document.getElementById("board-0")
+    }
+  }
+  if (newTile.children.namedItem("leftphone")) {
+    newTile = document.getElementById("board-0")
   }
 
   newTile.append(insert(char, "player"))
@@ -197,11 +218,16 @@ function moveChar (value) {
 // HELPER METHODS-----------------------------------------------------------------------------------------
 
 function insert (char, id) {
+  let div = document.createElement('div')
   let img = document.createElement('img')
   img.src = char.image
   img.className = 'center image'
-  img.id = id
-  return img
+  div.id = id
+  if (char.tagline) {
+    div.dataset.tagline = char.tagline
+  }
+  div.append(img)
+  return div
 }
 
 function removeChar (element, id) {
