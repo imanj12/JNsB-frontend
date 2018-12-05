@@ -26,6 +26,7 @@
 
 #gameboard > .grid-item {
   border-style: solid;
+  /* position: relative; */
 }
 
 .turns {
@@ -48,9 +49,11 @@
   max-width: 100%;
 }
 
-.grid-item {
-
-}
+/* .effect {
+  position: absolute;
+  bottom: 0;
+  background: white;
+} */
 
 /* Dice Roll Css */
 .block {
