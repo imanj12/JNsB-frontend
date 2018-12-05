@@ -52,7 +52,8 @@ function setMonster (monsters) {
 function moveMonsters() {
 
   function rollAndMove(monster) {
-    if (monster.children.length > 0) {
+    if (monster.children.namedItem("monster")) {
+      // debugger
       if (Math.random() > .5 ) {
         let newPosition = parseInt(monster.id.split('-')[1]) + 1
         if (newPosition > 24) {
@@ -71,10 +72,25 @@ function moveMonsters() {
           newPosition = 0
         }
         let newTile = document.getElementById(`board-${newPosition}`)
-        newTile.append(monster.firstElementChild)
+
+        if (newTile.children.namedItem("player")) {
+          let captiveMonster = Array.from(document.getElementById('sprites-container').children).find(function(child) {
+            return child.innerHTML != ''
+          })
+          if (captiveMonster) {
+            captiveMonster.innerHTML = ''
+          } else {
+            alert('Game over!')
+          }
+        } else {
+          newTile.append(monster.firstElementChild)
+        }
         return newTile
       }
     }
+
+
+
   }
   setTimeout(() => {monster1 = rollAndMove(monster1)}, 500)
   setTimeout(() => {monster2 = rollAndMove(monster2)}, 1000)
@@ -107,14 +123,11 @@ function rollDiceWithoutValues() {
 
 function moveChar (value) {
   let currentPosition = document.getElementById("player").parentElement
-  let newPosition = parseInt(currentPosition.id.split("-")[1]) + 2 // REMEMBER!!!!!!!!!!!!!!!!!!!!
+  let newPosition = parseInt(currentPosition.id.split("-")[1]) + 1 // REMEMBER!!!!!!!!!!!!!!!!!!!!
   if (newPosition > 24) {
     newPosition = 24
   }
   let newTile = document.getElementById(`board-${newPosition}`)
-  // check if newTile has child element of monster
-  // if newTile has monster
-    // then remove monster and put in sprites div
 
 
   if (newTile.children.namedItem('monster')) {
@@ -129,7 +142,6 @@ function moveChar (value) {
       i++
     }
   }
-
 
   newTile.append(insert(char, "player"))
   removeChar(currentPosition, 'player')
