@@ -20,6 +20,8 @@
 #sidebar {
   display: grid;
   grid-template-columns: 200px;
+  /* position: absolute;
+  right: 0%; */
 }
 
 #gameboard > .grid-item {
