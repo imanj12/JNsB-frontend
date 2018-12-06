@@ -46,10 +46,22 @@ body {
 
 #gameboard {
   display: grid;
-  grid-template-columns: 225px 225px 225px 225px 225px;
-  grid-template-rows: 225px 225px 225px 225px 225px;
-  grid-gap: 20px;
+  grid-template-columns: 210px 35px 210px 35px 210px 35px 210px 35px 210px;
+  grid-template-rows: 210px 210px 210px 210px 210px;
+  grid-row-gap: 35px;
   /* height: 800px; */
+}
+
+.arrow-right {
+  background-image: url('../images/chevron-right.png');
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+.arrow-left {
+  background-image: url('../images/chevron-left.png');
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 #sidebar {
@@ -58,6 +70,7 @@ body {
   /* position: absolute;
   right: 0%; */
 }
+
 
 #gameboard > .grid-item {
   border-style: solid;
