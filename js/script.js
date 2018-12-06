@@ -119,6 +119,7 @@ function moveMonsters() {
           monster.children.namedItem("monster").remove()
         } else {
           alert(`${monster.children.namedItem("monster").dataset.tagline} Game over!`)
+          return gameOver()
         }
       } else {
         newishTile.append(monster.children.namedItem('monster'))
@@ -202,10 +203,32 @@ function moveChar (value) {
   document.getElementById('rollBtn').disabled = true
   document.getElementById('turn-character').style.background = 'white'
   document.getElementById('turn-monster').style.background = 'green'
+
+  if (newTile.id === "board-24") {
+    alert("You have made it out of the Jack's Basement.")
+    return gameOver()
+  }
+
   moveMonsters()
 }
 
-// HELPER METHODS-----------------------------------------------------------------------------------------
+// HELPER METHODS----------------------------------------------------------------------------------------
+
+function gameOver() {
+  document.getElementById('greet-page').style.display = 'grid'
+  document.getElementById('master-wrapper').style.display = 'none'
+
+  // Removes Old Character Div from BoardGame Div
+  document.querySelector("#player").remove()
+
+  // Removes Old Monster Divs from BoardGame Div
+  monsterArr = Array.from(document.querySelectorAll("#monster"))
+  monsterArr.forEach((monster) => {monster.remove()})
+
+  // Removes Old Effect Divs from Board Game Div
+  effectArr = Array.from(document.querySelectorAll(".effect"))
+  effectArr.forEach((effect) => {effect.remove()})
+}
 
 function insert (char, id) {
   let div = document.createElement('div')
