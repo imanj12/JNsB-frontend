@@ -1,10 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // checkTiles()
-  getChar()
-  getMonster()
-  debuffsCreator()
+  document.getElementById('master-wrapper').style.display = 'none'
 })
 
+let selectedCharId
 let char
 let monster1, monster2, monster3, monster4, monster5
 let effectsArr = []
@@ -30,11 +28,10 @@ function debuffsCreator () {
   moveBack.className = 'effect'
   moveBack.innerText = "You're a fan of Jared Leto's joker. Move back 3 spaces on next turn."
 
-  // let index = Math.floor(Math.random() * monsterArr.length)
   function debuffCreator(debuff, length) {
     while (document.querySelectorAll('.effect').length < length) {
       let boardNum = Math.ceil(Math.random() * 22)
-      // debugger
+
       if (document.getElementById(`board-${boardNum}`).querySelector('.effect')) {
       } else {
         let clone = debuff.cloneNode(true)
@@ -48,8 +45,8 @@ function debuffsCreator () {
   debuffCreator(leftPhone, 8)
 }
 
-function getChar() {
-  fetch('http://localhost:3000/characters/1')
+function getChar(id) {
+  fetch(`http://localhost:3000/characters/${id}`)
     .then(res => res.json())
     .then(data => {
       char = data
@@ -72,7 +69,7 @@ function start(char) {
 
 function setMonster (monsters) {
   let selectedMonsters = monsterPicker(monsters)
-    // debugger
+
   monster1 = document.getElementById('board-2')
   monster1.append(insert(selectedMonsters[0], "monster"))
 
@@ -92,9 +89,7 @@ function setMonster (monsters) {
 function moveMonsters() {
 
   function rollAndMove(monster) {
-    // debugger
     if (monster.children.namedItem("monster")) {
-      // debugger
       let newishTile
       if (Math.random() > .5 ) {
         let newPosition = parseInt(monster.id.split('-')[1]) + 1
@@ -104,7 +99,6 @@ function moveMonsters() {
           newPosition = 0
         }
         let newTile = document.getElementById(`board-${newPosition}`)
-        // newTile.append(monster.firstElementChild)
         newishTile = newTile
       } else {
         let newPosition = parseInt(monster.id.split('-')[1]) - 1
@@ -114,7 +108,6 @@ function moveMonsters() {
           newPosition = 0
         }
         let newTile = document.getElementById(`board-${newPosition}`)
-        // newTile.append(monster.firstElementChild)
         newishTile = newTile
       }
       if (newishTile.children.namedItem("player")) {
@@ -125,7 +118,7 @@ function moveMonsters() {
           captiveMonster.innerHTML = ''
           monster.children.namedItem("monster").remove()
         } else {
-          alert(`Game over! ${monster.children.namedItem("monster").dataset.tagline}`)
+          alert(`${monster.children.namedItem("monster").dataset.tagline} Game over!`)
         }
       } else {
         newishTile.append(monster.children.namedItem('monster'))
@@ -166,7 +159,6 @@ function rollDiceWithoutValues() {
 function moveChar (value) {
   let currentPosition = document.getElementById("player").parentElement
 
-
   if (currentPosition.querySelector('.effect')) {
     switch (currentPosition.querySelector('.effect').id) {
       case 'dysentary':
@@ -193,7 +185,6 @@ function moveChar (value) {
     while (!!newTile.children.namedItem('monster')) {
       if (spritesContainer.children[i].innerHTML === '') {
         spritesContainer.children[i].append(newTile.children.namedItem('monster'))
-        // reset monster 1
       }
       i++
     }
@@ -212,7 +203,6 @@ function moveChar (value) {
   document.getElementById('turn-character').style.background = 'white'
   document.getElementById('turn-monster').style.background = 'green'
   moveMonsters()
-    // at end of this function, re-enable roll, highlight character turn
 }
 
 // HELPER METHODS-----------------------------------------------------------------------------------------
