@@ -65,6 +65,7 @@ function start(char) {
   let firstTile = document.getElementById('board-0')
   firstTile.append(insert(char, "player"))
   document.getElementById('turn-character').style.background = 'green'
+  showCurrentCharStats()
 }
 
 function setMonster (monsters) {
@@ -133,6 +134,7 @@ function moveMonsters() {
           monster.children.namedItem("monster").remove()
         } else {
           alert(`${monster.children.namedItem("monster").dataset.tagline} Game over! You were killed by ${monster.children.namedItem("monster").dataset.name}.`)
+          patchChar('deaths')
           return gameOver()
         }
       } else {
@@ -209,11 +211,17 @@ function moveChar (value) {
       }
       i++
     }
-    // FETCH AND PLACE MONSTER ON TO BOARD AFTER CAPTURING
-    // let tempMonster = remainingMonsters.splice(0,1)[0]
-    // document.querySelector('#board-22').append(insert(tempMonster, "monster"))
+
+    patchChar('jackscaptured')
+
     alert(`You have dangled some Johnnie Walker Blue in front of ${capturedMonsterName} and convinced him to fight for you.`)
 
+    // Game over if three Jacks are captured
+    if (spritesContainer.getElementsByTagName('img').length > 3) {
+      alert("You have captured three Jacks! Good job! You can now safely escape Jack Nicholson's Basement.")
+      patchChar('wins')
+      gameOver()
+    }
 
     // GO BACK TO START
     if (newTile.children.namedItem("leftphone")) {
@@ -235,6 +243,7 @@ function moveChar (value) {
 
   if (newTile.id === "board-24") {
     alert("You have made it out of Jack's Basement!")
+    patchChar('wins')
     return gameOver()
   }
 
@@ -286,5 +295,29 @@ function monsterPicker (monsterArr) {
   }
   remainingMonsters = monsterArr
   return selectedMonsters = selectedMonsters.flat()
+}
+
+function patchChar (field) {
+  if (!(field === 'jackscaptured')) {
+    char.timesplayed += 1
+  }
+  char[field] += 1
+  fetch(`http://localhost:3000/characters/${char.id}`, {
+    method: 'PATCH',
+    headers: {
+        "Content-Type": "application/json; charset=utf-8",
+        'Accept': 'application/json'
+    },
+    body: JSON.stringify(char)
+    }
+  )
+}
+
+function showCurrentCharStats() {
+  // document.getElementById('stats').innerText = `${char.name}'s Stats`
+  document.getElementById('capturedjacks').innerHTML = `<strong>Total Captured Jacks:</strong> ${char.jackscaptured}`
+  document.getElementById('timesplayed').innerHTML = `<strong>Times Played:</strong>${char.timesplayed}`
+  document.getElementById('wins').innerHTML = `<strong>Wins:</strong>${char.wins}`
+  document.getElementById('deaths').innerHTML = `<strong>Deaths:</strong>${char.deaths}`
 
 }

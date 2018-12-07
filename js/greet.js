@@ -13,8 +13,8 @@ function createChar (event) {
   event.preventDefault()
   let charForm = document.querySelector("#char-form")
   dataObject = {
-  name: charForm.children[0].value.trim(),
-  image: charForm.children[1].value.trim()
+    name: charForm.children[0].value.trim(),
+    image: charForm.children[1].value.trim(),
   }
   charForm.children[0].value = ''
   charForm.children[1].value = ''
