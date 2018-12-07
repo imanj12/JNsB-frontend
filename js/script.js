@@ -315,9 +315,9 @@ function patchChar (field) {
 
 function showCurrentCharStats() {
   // document.getElementById('stats').innerText = `${char.name}'s Stats`
-  document.getElementById('capturedjacks').innerHTML = `<strong>Total Captured Jacks:</strong> ${char.jackscaptured}`
-  document.getElementById('timesplayed').innerHTML = `<strong>Times Played:</strong>${char.timesplayed}`
-  document.getElementById('wins').innerHTML = `<strong>Wins:</strong>${char.wins}`
-  document.getElementById('deaths').innerHTML = `<strong>Deaths:</strong>${char.deaths}`
+  document.getElementById('capturedjacks').innerHTML = `<strong>Total Jacks Captured: </strong>${char.jackscaptured}`
+  document.getElementById('timesplayed').innerHTML = `<strong>Times Played: </strong>${char.timesplayed}`
+  document.getElementById('wins').innerHTML = `<strong>Wins: </strong>${char.wins}`
+  document.getElementById('deaths').innerHTML = `<strong>Deaths: </strong>${char.deaths}`
 
 }
