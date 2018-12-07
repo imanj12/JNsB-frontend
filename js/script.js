@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 let selectedCharId
 let char
-let monster1, monster2, monster3, monster4, monster5
+let monster1, monster2, monster3, monster4, monster5, monster6, monster7, monster8
 let effectsArr = []
 
 function debuffsCreator () {
@@ -69,6 +69,7 @@ function start(char) {
 
 function setMonster (monsters) {
   let selectedMonsters = monsterPicker(monsters)
+  // debugger
 
   monster1 = document.getElementById('board-2')
   monster1.append(insert(selectedMonsters[0], "monster"))
@@ -115,6 +116,8 @@ function moveMonsters() {
           return child.innerHTML != ''
         })
         if (captiveMonster) {
+          debugger
+          alert(`Your captive Jack, ${captiveMonster.children[0].dataset.name}, and ${monster.children[0].dataset.name} have fought to the death. You scamper off unscathed.`)
           captiveMonster.innerHTML = ''
           monster.children.namedItem("monster").remove()
         } else {
@@ -134,6 +137,7 @@ function moveMonsters() {
   setTimeout(() => {monster3 = rollAndMove(monster3)}, 1000)
   setTimeout(() => {monster4 = rollAndMove(monster4)}, 1500)
   setTimeout(() => {monster5 = rollAndMove(monster5)}, 2000)
+  //add ifs to check for monster 6, 7, 8
   setTimeout(() => {
     document.getElementById('rollBtn').disabled = false
     document.getElementById('turn-character').style.background = 'green'
@@ -184,14 +188,21 @@ function moveChar (value) {
   // CAPTURE MONSTER AND STORE IN SPRITE CONTAINER
   if (newTile.children.namedItem('monster')) {
     let spritesContainer = document.getElementById('sprites-container')
+    let capturedMonsterName
     let i = 0
     while (!!newTile.children.namedItem('monster')) {
       if (spritesContainer.children[i].innerHTML === '') {
         spritesContainer.children[i].append(newTile.children.namedItem('monster'))
+        // debugger
+        capturedMonsterName = spritesContainer.children[i].children[0].dataset.name
       }
       i++
     }
     // FETCH AND PLACE MONSTER ON TO BOARD AFTER CAPTURING
+    // let tempMonster = remainingMonsters.splice(0,1)[0]
+    // document.querySelector('#board-22').append(insert(tempMonster, "monster"))
+    alert(`You have dangled some Johnnie Walker Blue in front of ${capturedMonsterName} and convinced him to fight for you.`)
+
 
     // GO BACK TO START
     if (newTile.children.namedItem("leftphone")) {
@@ -255,12 +266,14 @@ function insert (char, id) {
 function removeChar (element, id) {
   element.children.namedItem(id).remove()
 }
-
+let remainingMonsters = []
 function monsterPicker (monsterArr) {
   let selectedMonsters = []
   while (monsterArr.length > 3) {
     let index = Math.floor(Math.random()*monsterArr.length)
     selectedMonsters.push(monsterArr.splice(index,1))
   }
+  remainingMonsters = monsterArr
   return selectedMonsters = selectedMonsters.flat()
+
 }
