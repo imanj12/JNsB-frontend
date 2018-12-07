@@ -102,6 +102,9 @@ function moveMonsters() {
         if (monster.id === 'board-24') {
           newPosition = 23
         }
+        if (parseInt(document.querySelector('#player').parentElement.id.split('-')[1]) > newPosition) {
+          newPosition = parseInt(monster.id.split('-')[1]) + 1
+        }
         let newTile = document.getElementById(`board-${newPosition}`)
         newishTile = newTile
       } else {
@@ -114,6 +117,9 @@ function moveMonsters() {
         if (monster.id === 'board-24') {
           newPosition = 23
         }
+        if (parseInt(document.querySelector('#player').parentElement.id.split('-')[1]) > newPosition) {
+          newPosition = parseInt(monster.id.split('-')[1]) + 1
+        }
         let newTile = document.getElementById(`board-${newPosition}`)
         newishTile = newTile
       }
@@ -122,7 +128,6 @@ function moveMonsters() {
           return child.innerHTML != ''
         })
         if (captiveMonster) {
-          debugger
           alert(`Your captive Jack, ${captiveMonster.children[0].dataset.name}, and ${monster.children.namedItem('monster').dataset.name} have fought to the death. You scamper off unscathed.`)
           captiveMonster.innerHTML = ''
           monster.children.namedItem("monster").remove()
