@@ -118,25 +118,26 @@ function moveMonsters() {
           captiveMonster.innerHTML = ''
           monster.children.namedItem("monster").remove()
         } else {
-          alert(`${monster.children.namedItem("monster").dataset.tagline} Game over!`)
+          alert(`${monster.children.namedItem("monster").dataset.tagline} Game over! You were killed by ${monster.children.namedItem("monster").dataset.name}.`)
           return gameOver()
         }
       } else {
         newishTile.append(monster.children.namedItem('monster'))
+        let monsterDiv = newishTile.children.namedItem('monster')
+        $(monsterDiv).hide().fadeIn(500)
       }
       return newishTile
     }
-
   }
   setTimeout(() => {monster1 = rollAndMove(monster1)}, 250)
   setTimeout(() => {monster2 = rollAndMove(monster2)}, 500)
   setTimeout(() => {monster3 = rollAndMove(monster3)}, 1000)
   setTimeout(() => {monster4 = rollAndMove(monster4)}, 1500)
+  setTimeout(() => {monster5 = rollAndMove(monster5)}, 2000)
   setTimeout(() => {
-    monster5 = rollAndMove(monster5)
     document.getElementById('rollBtn').disabled = false
     document.getElementById('turn-character').style.background = 'green'
-    document.getElementById('turn-monster').style.background = 'white'
+    document.getElementById('turn-monster').style.background = 'none'
   }, 2000)
 
 }
@@ -180,6 +181,7 @@ function moveChar (value) {
   }
   let newTile = document.getElementById(`board-${newPosition}`)
 
+  // CAPTURE MONSTER AND STORE IN SPRITE CONTAINER
   if (newTile.children.namedItem('monster')) {
     let spritesContainer = document.getElementById('sprites-container')
     let i = 0
@@ -189,7 +191,9 @@ function moveChar (value) {
       }
       i++
     }
-    // debugger
+    // FETCH AND PLACE MONSTER ON TO BOARD AFTER CAPTURING
+
+    // GO BACK TO START
     if (newTile.children.namedItem("leftphone")) {
       newTile = document.getElementById("board-0")
     }
@@ -198,14 +202,17 @@ function moveChar (value) {
     newTile = document.getElementById("board-0")
   }
 
-  newTile.append(insert(char, "player"))
+  // FADE IN PLAYER AFTER MOVE
   removeChar(currentPosition, 'player')
+  newTile.append(insert(char, "player"))
+  $("#player").hide().fadeIn(1000)
+
   document.getElementById('rollBtn').disabled = true
-  document.getElementById('turn-character').style.background = 'white'
+  document.getElementById('turn-character').style.background = 'none'
   document.getElementById('turn-monster').style.background = 'green'
 
   if (newTile.id === "board-24") {
-    alert("You have made it out of the Jack's Basement.")
+    alert("You have made it out of Jack's Basement!")
     return gameOver()
   }
 
@@ -238,7 +245,9 @@ function insert (char, id) {
   div.id = id
   if (char.tagline) {
     div.dataset.tagline = char.tagline
+    div.dataset.name = char.name
   }
+
   div.append(img)
   return div
 }

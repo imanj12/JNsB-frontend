@@ -1,17 +1,79 @@
 body {
   background-image: url('https://cdn.hipwallpaper.com/i/14/0/es9Jgk.jpg');
   color: whitesmoke;
+  font-family: sans-serif;
+  background-repeat: no-repeat;
+  background-size: cover;
+  /* background-blend-mode: darken; */
 }
 
-#leavegame {
+button:hover {
+
+}
+
+#leave-game {
   margin-top: 100px;
+  width: 130px;
+  height: 40px;
+  border-radius: 10px;
+  font-size: 16px;
 }
 
-#start {
+.underline {
+  text-decoration: underline;
+}
+
+/* GREET SCREEN ------------------------------*/
+.greet-chars:hover {
+  background-color: rgb(156, 54, 54);
+  border-radius: 20px;
+}
+
+#greet-title {
+  text-align: center;
+}
+
+#greet-page {
+  display: grid;
+  grid-template-columns: 650px;
+  justify-content: center;
+  grid-row-gap: 20px;
+}
+
+/* CREATE FORM FIELDS */
+#create-name {
   width: 200px;
+  height: 30px;
+  font-size: 20px;
+}
+
+#create-url {
+  width: 200px;
+  height: 30px;
+  font-size: 20px;
+}
+
+/* CREATE FORM BUTTON */
+
+#create-button {
+  width: 200px;
+  height: 100px;
   margin-left: 200px;
   margin-right: 200px;
+  margin-top: 10px;
+  font-size: 20px;
+  border-radius: 10px;
 }
+
+/* DELETE BUTTON  */
+
+.delete-char {
+  width: 200px;
+  height: 30px;
+  font-size: 20px;
+}
+
+/* HOW TO PLAY SCREEN ------------------------------*/
 
 #how-to {
   display: grid;
@@ -26,16 +88,23 @@ body {
   grid-gap: 20px;
 }
 
-#greet-page {
-  display: grid;
-  grid-template-columns: 600px;
-  justify-content: center;
-  grid-row-gap: 20px;
-}
-
 .center {
   text-align: center;
 }
+
+/* HOW TO PLAY START BUTTON */
+
+#start {
+  width: 200px;
+  height: 100px;
+  margin-left: 200px;
+  margin-right: 200px;
+  margin-top: 75px;
+  font-size: 20px;
+  border-radius: 10px;
+}
+
+/* BOARDGAME SCREEN ------------------------------*/
 
 #master-container {
   display: grid;
@@ -77,21 +146,24 @@ body {
   right: 0%; */
 }
 
-
 #gameboard > .grid-item {
   border-style: solid;
   border-color: whitesmoke;
+  border-radius: 5px;
   /* position: relative; */
+}
+
+#clippers, #leftphone, #moveback, #dysentary {
+  text-shadow: 2px 2px 4px black;
 }
 
 .turns {
   float: left;
-  display: inline-block;
-  padding-right: 10px;
-}
-
-#monster-sprites {
-
+  /* display: inline-block; */
+  margin-right: 30px;
+  margin-bottom: 15px;
+  padding: 10px 10px 10px 10px;
+  border-radius: 20px;
 }
 
 #sprites-container {
@@ -107,14 +179,14 @@ body {
   bottom: 0%; */
 }
 
-/* .effect {
-  position: absolute;
-  bottom: 0;
-  background: white;
-} */
+#rollBtn {
+  width: 80px;
+  height: 35px;
+  border-radius: 10px;
+  font-size: 16px;
+}
 
-/* Dice Roll Css */
-
+/* DICE ROLL */
 
 .block {
   display: flex;
@@ -136,10 +208,10 @@ body {
   margin: 5px;
 }
 #dice-box1 {
-  height: 200px;
+  height: 300px;
 }
 #dice-box2 {
-  height: 200px;
+  height: 300px;
 }
 .roll {
   height: 80px;

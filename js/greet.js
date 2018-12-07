@@ -13,9 +13,11 @@ function createChar (event) {
   event.preventDefault()
   let charForm = document.querySelector("#char-form")
   dataObject = {
-  name: charForm.children[0].value,
-  image: charForm.children[1].value
+  name: charForm.children[0].value.trim(),
+  image: charForm.children[1].value.trim()
   }
+  charForm.children[0].value = ''
+  charForm.children[1].value = ''
 
   fetch('http://localhost:3000/characters', {
     method: "POST",
@@ -33,7 +35,7 @@ function renderChars (charsArr) {
     let div = document.createElement('div')
     let img = document.createElement('img')
     div.innerHTML = `<h3 class="center">${char.name}</h3>`
-    div.className = "grid-item center"
+    div.className = "grid-item center greet-chars"
     img.src = char.image
     img.className = "image center"
     img.dataset.id = char.id
@@ -46,6 +48,7 @@ function renderChars (charsArr) {
       let btn = document.createElement("button")
       btn.dataset.id = char.id
       btn.innerText = "Delete Character"
+      btn.className = "delete-char"
       btn.addEventListener("click", deleteChar)
       div.append(btn)
     }

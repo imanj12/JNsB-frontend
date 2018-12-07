@@ -6,7 +6,9 @@ document.addEventListener('DOMContentLoaded', function(){
     getChar(selectedCharId)
     getMonster()
     debuffsCreator()
-
-    document.getElementById('leavegame').addEventListener('click', gameOver)
+    document.getElementById('turn-character').style.background = 'green'
+    document.getElementById('turn-monster').style.background = 'none'
+    document.getElementById('rollBtn').disabled = false
+    document.getElementById('leave-game').addEventListener('click', gameOver)
   })
 })
